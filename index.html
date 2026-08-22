@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#0a0f18" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Engineering Studio" />
+  <title>Engineering Studio FULL</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="appShell" class="app-shell">
+  <header class="topbar glass">
+    <div class="brand-block">
+      <div class="brand-logo">⬡</div>
+      <div class="brand-copy">
+        <strong>Engineering Studio</strong>
+        <span>Universal CAD & Calculator</span>
+      </div>
+      <span class="version">FULL v1.0</span>
+    </div>
+
+    <div class="project-pill">
+      <span class="project-label">ПРОЕКТ</span>
+      <strong id="projectNameTop">Фланец_корпус</strong>
+    </div>
+
+    <nav class="mode-tabs" aria-label="Режимы">
+      <button class="mode-tab active" data-mode="sketch">✎<span>Эскиз</span></button>
+      <button class="mode-tab" data-mode="model">⬡<span>3D Модель</span></button>
+      <button class="mode-tab" data-mode="drawing">▱<span>Чертёж</span></button>
+      <button class="mode-tab" data-mode="calc">▦<span>Расчёты</span></button>
+      <button class="mode-tab" data-mode="analysis">◉<span>Анализ</span></button>
+      <button class="mode-tab" data-mode="materials">◇<span>Материалы</span></button>
+    </nav>
+
+    <div class="top-actions">
+      <button id="undoBtn" class="icon-btn" title="Отменить">↶</button>
+      <button id="redoBtn" class="icon-btn" title="Повторить">↷</button>
+      <button id="saveBtn" class="primary-btn">Сохранить</button>
+      <button id="themeBtn" class="icon-btn" title="Тема">◐</button>
+      <button id="settingsBtn" class="icon-btn" title="Настройки">⚙</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="rail glass">
+      <button class="rail-item active" data-panel="sketch"><span>✎</span>Эскиз</button>
+      <button class="rail-item" data-panel="part"><span>⬡</span>Деталь</button>
+      <button class="rail-item" data-panel="assembly"><span>◫</span>Сборка</button>
+      <button class="rail-item" data-panel="drawing"><span>▱</span>Чертёж</button>
+      <button class="rail-item" data-panel="calculator"><span>▦</span>Калькулятор</button>
+      <button class="rail-item" data-panel="tables"><span>▦</span>Таблицы</button>
+      <button class="rail-item" data-panel="materials"><span>◇</span>Материалы</button>
+      <button class="rail-item" data-panel="tolerances"><span>◎</span>Допуски</button>
+      <button class="rail-item" data-panel="threads"><span>≋</span>Резьбы</button>
+      <button class="rail-item" data-panel="history"><span>↶</span>История</button>
+      <div class="rail-spacer"></div>
+      <button class="rail-item"><span>⚙</span>Настройки</button>
+    </aside>
+
+    <aside class="left-stack">
+      <section class="panel tree-panel glass">
+        <div class="panel-head"><strong>Дерево построения</strong><div>≡ ⋮</div></div>
+        <div class="tree-body">
+          <div class="tree-row root">▣ <b id="projectNameTree">Фланец_корпус</b></div>
+          <div class="tree-row">└─ ⏱ История</div>
+          <div class="tree-row">└─ ◇ Материал: <span id="treeMaterial">Сталь 45</span></div>
+          <div class="tree-row">└─ ╳ Базовые плоскости</div>
+          <div class="tree-row group">⌄ ✎ Эскизы</div>
+          <div class="tree-row selected">&nbsp;&nbsp;└─ ✎ Эскиз1 <span>◉</span></div>
+          <div class="tree-row">&nbsp;&nbsp;└─ ✎ Эскиз2 <span>○</span></div>
+          <div class="tree-row group">⌄ ⬡ Операции</div>
+          <div class="tree-row">&nbsp;&nbsp;1. Вытянуть1</div>
+          <div class="tree-row">&nbsp;&nbsp;2. Отверстие Ø<span data-live="bore">25</span></div>
+          <div class="tree-row">&nbsp;&nbsp;3. Цилиндр. расточка</div>
+          <div class="tree-row">&nbsp;&nbsp;4. Скругление R5</div>
+          <div class="tree-row">&nbsp;&nbsp;5. Фаска 2×45°</div>
+          <div class="tree-row">&nbsp;&nbsp;6. Массив отв. (<span data-live="holes">4</span>)</div>
+        </div>
+      </section>
+
+      <section class="panel params-panel glass">
+        <div class="panel-head"><strong>Параметры</strong><div>⋮</div></div>
+        <div class="param-table">
+          <div class="param-row heading"><span>Имя</span><span>Значение</span><span>Ед.</span></div>
+          <label class="param-row selected"><span>D1</span><input data-param="outer" inputmode="decimal" value="82.500"><span>мм</span></label>
+          <label class="param-row"><span>D2</span><input data-param="pcd" inputmode="decimal" value="58.000"><span>мм</span></label>
+          <label class="param-row"><span>D3</span><input data-param="bore" inputmode="decimal" value="25.000"><span>мм</span></label>
+          <label class="param-row"><span>H</span><input data-param="thickness" inputmode="decimal" value="36.000"><span>мм</span></label>
+          <label class="param-row"><span>h1</span><input data-param="bossH" inputmode="decimal" value="12.000"><span>мм</span></label>
+          <label class="param-row"><span>n</span><input data-param="holes" inputmode="numeric" value="4"><span>шт</span></label>
+          <label class="param-row"><span>α</span><input data-param="angle" inputmode="decimal" value="45.000"><span>°</span></label>
+          <label class="param-row"><span>t</span><input data-param="hole" inputmode="decimal" value="9.000"><span>мм</span></label>
+        </div>
+        <button id="resetParamsBtn" class="link-btn">↺ Сбросить параметры</button>
+      </section>
+    </aside>
+
+    <section class="center-stack">
+      <section class="panel cad-panel glass">
+        <div class="panel-head cad-head">
+          <strong id="cadTitle">Эскиз1</strong>
+          <div class="cad-tools" aria-label="Инструменты эскиза">
+            <button data-tool="select" class="tool active">⌁</button>
+            <button data-tool="line" class="tool">╱</button>
+            <button data-tool="dimension" class="tool">↔</button>
+            <button data-tool="circle" class="tool">○</button>
+            <button data-tool="rect" class="tool">□</button>
+            <button data-tool="arc" class="tool">◜</button>
+            <button data-tool="trim" class="tool">✂</button>
+            <button data-tool="constraint" class="tool">⌘</button>
+          </div>
+          <div class="cad-status" id="toolStatus">Выбор</div>
+        </div>
+        <div class="cad-canvas-wrap" id="cadCanvasWrap">
+          <svg id="sketchSvg" class="sketch-svg" viewBox="0 0 900 520" role="img" aria-label="Живой параметрический эскиз фланца">
+            <defs>
+              <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="#1a2838" stroke-width="1"/></pattern>
+              <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6cff3a"/></marker>
+              <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#28a8ff"/></marker>
+            </defs>
+            <rect width="900" height="520" fill="#08101a"/>
+            <rect width="900" height="520" fill="url(#grid)" opacity=".7"/>
+            <g id="sketchGeometry"></g>
+            <g id="sketchDims"></g>
+            <g class="axis">
+              <line x1="450" y1="30" x2="450" y2="490" stroke="#ef4b5c" stroke-width="1" stroke-dasharray="5 5" opacity=".7"/>
+              <line x1="80" y1="260" x2="820" y2="260" stroke="#ef4b5c" stroke-width="1" stroke-dasharray="5 5" opacity=".7"/>
+              <text x="818" y="250" fill="#ff4c61" font-size="16">X</text>
+              <text x="462" y="46" fill="#65e85b" font-size="16">Y</text>
+            </g>
+          </svg>
+          <div class="view-cube">Верх<br><span>Перед&nbsp;&nbsp;Право</span></div>
+          <div class="coord-readout">X: <span id="coordX">0.000</span>&nbsp;&nbsp; Y: <span id="coordY">0.000</span>&nbsp;&nbsp; мм</div>
+        </div>
+      </section>
+
+      <section class="panel model-panel glass">
+        <div class="panel-head"><strong>3D Модель</strong><div class="model-tools">⟲ ⊕ ⊖ ◉ ⛶</div></div>
+        <div class="model-stage">
+          <svg id="modelSvg" viewBox="0 0 900 300" aria-label="Параметрическая 3D модель фланца">
+            <defs>
+              <linearGradient id="metalTop" x1="0" x2="1"><stop offset="0" stop-color="#5b6470"/><stop offset=".3" stop-color="#c3c8cf"/><stop offset=".55" stop-color="#737d88"/><stop offset=".82" stop-color="#d8dde3"/><stop offset="1" stop-color="#59626c"/></linearGradient>
+              <linearGradient id="metalSide" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#777f89"/><stop offset="1" stop-color="#242a31"/></linearGradient>
+              <radialGradient id="metalInner"><stop offset="0" stop-color="#05080d"/><stop offset=".65" stop-color="#171d25"/><stop offset="1" stop-color="#8f98a3"/></radialGradient>
+              <filter id="softShadow"><feGaussianBlur stdDeviation="8"/></filter>
+            </defs>
+            <g id="modelGroup"></g>
+          </svg>
+          <div class="xyz"><b class="x">X</b><b class="y">Y</b><b class="z">Z</b></div>
+        </div>
+        <div class="feature-strip">
+          <button data-feature="extrude">▱<span>Вытянуть</span></button>
+          <button data-feature="cut">◫<span>Вырезать</span></button>
+          <button data-feature="revolve">◉<span>Вращение</span></button>
+          <button data-feature="hole">⊙<span>Отверстие</span></button>
+          <button data-feature="pattern">✣<span>Массив</span></button>
+          <button data-feature="mirror">◫<span>Зеркало</span></button>
+          <button data-feature="fillet">◡<span>Скругление</span></button>
+          <button data-feature="chamfer">⌁<span>Фаска</span></button>
+        </div>
+      </section>
+    </section>
+
+    <aside class="right-stack">
+      <section class="panel calc-panel glass">
+        <div class="panel-head"><strong>Калькулятор</strong><span>Инженерный</span></div>
+        <div class="calc-display">
+          <input id="calcExpr" aria-label="Выражение" value="82.500 - 25.000 / 2" />
+          <div class="calc-result"><span id="calcResult">70.000</span><small id="calcUnit">мм</small></div>
+        </div>
+        <div class="precision-row" id="precisionRow">
+          <span>Точность</span>
+          <button data-precision="1">0.1</button>
+          <button data-precision="2">0.01</button>
+          <button data-precision="3" class="active">0.001</button>
+          <button data-precision="4">0.0001</button>
+        </div>
+        <div class="keypad" id="keypad">
+          <button data-key="C">C</button><button data-key="(">(</button><button data-key=")">)</button><button data-key="/">÷</button>
+          <button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button><button data-key="*">×</button>
+          <button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button><button data-key="-">−</button>
+          <button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button><button data-key="+">+</button>
+          <button data-key="neg">+/−</button><button data-key="0">0</button><button data-key=".">.</button><button class="eq" data-key="=">=</button>
+        </div>
+      </section>
+
+      <section class="panel chain-panel glass">
+        <div class="panel-head"><strong>Размерные цепи</strong><button id="clearChainBtn" class="mini-btn">↺</button></div>
+        <input id="chainExpr" value="82.500 - 25.000 - 12.000 - 4.500" aria-label="Размерная цепь" />
+        <div class="chain-grid">
+          <div class="chain-terms" id="chainTerms"></div>
+          <div class="chain-tol"><span>Допуск цепи</span><b>+0.035</b><b>0.000</b><b>-0.035</b></div>
+        </div>
+        <div class="chain-result">= <strong id="chainResult">41.000</strong> <small>мм</small></div>
+        <div class="range-bar"><span>Min <b id="chainMin">40.965</b></span><div><i id="rangeDot"></i></div><span>Max <b id="chainMax">41.035</b></span></div>
+      </section>
+
+      <section class="panel tolerance-panel glass">
+        <div class="panel-head"><strong>Допуски и посадки</strong><span>ⓘ</span></div>
+        <div class="fit-controls">
+          <label><span>Отверстие</span><select id="holeFit"><option>Ø25 H7</option><option>Ø25 H8</option><option>Ø25 H9</option></select></label>
+          <label><span>Вал</span><select id="shaftFit"><option>Ø25 h6</option><option>Ø25 g6</option><option>Ø25 k6</option><option>Ø25 p6</option></select></label>
+        </div>
+        <div class="fit-data">
+          <div class="fit-sketch"><div class="hatch"></div><span>вал</span><span>отв.</span></div>
+          <div class="fit-table">
+            <div><span>D (номинал)</span><b>25.000 мм</b></div>
+            <div><span>Верх. откл.</span><b id="fitUpper">+0.021 мм</b></div>
+            <div><span>Ниж. откл.</span><b id="fitLower">0.000 мм</b></div>
+            <div><span>Max размер</span><b id="fitMax">25.021 мм</b></div>
+            <div><span>Min размер</span><b id="fitMin">25.000 мм</b></div>
+            <div><span>Характер</span><b id="fitType">с зазором</b></div>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <section class="bottom-grid">
+      <section class="panel formulas-panel glass">
+        <div class="panel-head"><strong>Недавние формулы</strong><span>⋮</span></div>
+        <div class="formula-grid">
+          <button data-formula="pi*r*r">Площадь круга <b>A = π × d² / 4</b></button>
+          <button data-formula="pi*r*r*h">Объём цилиндра <b>V = π × d² / 4 × h</b></button>
+          <button data-formula="pi*d">Длина окружности <b>L = π × d</b></button>
+          <button data-formula="atan2">Угол между точками <b>α = atan2(Δy, Δx)</b></button>
+        </div>
+      </section>
+
+      <section class="panel mass-panel glass">
+        <div class="panel-head"><strong>Материал и масса</strong><span>⋮</span></div>
+        <div class="mass-controls">
+          <select id="materialSelect">
+            <option value="7850">Сталь 45</option>
+            <option value="7930">AISI 304</option>
+            <option value="8000">AISI 316L</option>
+            <option value="2700">Алюминий 6061</option>
+            <option value="8500">Латунь</option>
+            <option value="1140">Полиамид PA6</option>
+          </select>
+          <span>ρ = <b id="densityText">7850</b> кг/м³</span>
+        </div>
+        <div class="mass-results">
+          <div><span>Объём</span><b id="volumeResult">1546.832 см³</b></div>
+          <div><span>Масса</span><strong id="massResult">12.143 кг</strong></div>
+          <div class="mass-ring"><span id="ringMass">12.14</span><small>kg</small></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <nav class="mobile-dock glass" aria-label="Мобильная навигация">
+    <button class="active" data-mode="sketch">✎<span>Эскиз</span></button>
+    <button data-mode="model">⬡<span>3D</span></button>
+    <button data-mode="drawing">▱<span>Чертёж</span></button>
+    <button data-mode="calc">▦<span>Расчёт</span></button>
+    <button data-mode="materials">◇<span>Материал</span></button>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="settingsDialog">
+    <form method="dialog" class="dialog-card">
+      <div class="panel-head"><strong>Настройки проекта</strong><button value="cancel" class="mini-btn">✕</button></div>
+      <label>Название проекта<input id="projectNameInput" value="Фланец_корпус"></label>
+      <label>Единицы<select id="unitSelect"><option value="мм">мм</option><option value="inch">inch</option></select></label>
+      <label class="switch-row"><input id="autoSaveToggle" type="checkbox" checked> Автосохранение локально</label>
+      <button id="applySettingsBtn" value="default" class="primary-btn">Применить</button>
+    </form>
+  </dialog>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
